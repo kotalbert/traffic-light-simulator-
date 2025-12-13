@@ -1,5 +1,6 @@
 package traffic;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
@@ -41,6 +42,15 @@ public class Main {
                 return false;
             default:
                 System.out.println("Invalid option. Please try again.");
+        }
+        sc.nextLine(); // Consume newline
+        sc.nextLine();
+        try {
+            var clearCommand = System.getProperty("os.name").contains("Windows")
+                    ? new ProcessBuilder("cmd", "/c", "cls")
+                    : new ProcessBuilder("clear");
+            clearCommand.inheritIO().start().waitFor();
+        } catch (IOException | InterruptedException ignored) {
         }
         return true;
     }
