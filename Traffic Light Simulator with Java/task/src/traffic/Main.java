@@ -25,9 +25,8 @@ public class Main {
     private static void getInterval(Scanner sc) {
         System.out.print("Input the interval: ");
         while (true) {
-
             try {
-                int interval = sc.nextInt();
+                int interval = Integer.parseInt(sc.nextLine());
                 if (interval > 0) {
                     break;
                 } else {
@@ -36,7 +35,6 @@ public class Main {
                 }
             } catch (Exception e) {
                 System.out.print("Incorrect input. Please try again:");
-                sc.next(); // clear invalid input
             }
         }
     }
@@ -48,20 +46,19 @@ public class Main {
      */
     private static void getNumberOfRoads(Scanner sc) {
         System.out.print("Input the number of roads: ");
-        try {
             while (true) {
-                int numberOfRoads = sc.nextInt();
+                try {
+                    int numberOfRoads = Integer.parseInt(sc.nextLine());
                 if (numberOfRoads > 0) {
                     break;
                 } else {
                     System.out.print("Incorrect input. Please try again:");
                     sc.next();
                 }
+                } catch (Exception e) {
+                    System.out.print("Incorrect input. Please try again:");
+                }
             }
-        } catch (Exception e) {
-            System.out.print("Incorrect input. Please try again:");
-            sc.next(); // clear invalid input
-        }
     }
 
     private static boolean handleMenu() {
