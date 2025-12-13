@@ -24,6 +24,10 @@ public class Main {
      */
     private static void getInterval(Scanner sc) {
         System.out.print("Input the interval: ");
+        getUserInput(sc);
+    }
+
+    private static void getUserInput(Scanner sc) {
         while (true) {
             try {
                 int interval = Integer.parseInt(sc.nextLine());
@@ -46,19 +50,7 @@ public class Main {
      */
     private static void getNumberOfRoads(Scanner sc) {
         System.out.print("Input the number of roads: ");
-            while (true) {
-                try {
-                    int numberOfRoads = Integer.parseInt(sc.nextLine());
-                if (numberOfRoads > 0) {
-                    break;
-                } else {
-                    System.out.print("Incorrect input. Please try again:");
-                    sc.next();
-                }
-                } catch (Exception e) {
-                    System.out.print("Incorrect input. Please try again:");
-                }
-            }
+        getUserInput(sc);
     }
 
     private static boolean handleMenu() {
@@ -94,9 +86,7 @@ public class Main {
 
     private static void clearConsole() {
         try {
-            var clearCommand = System.getProperty("os.name").contains("Windows")
-                    ? new ProcessBuilder("cmd", "/c", "cls")
-                    : new ProcessBuilder("clear");
+            var clearCommand = System.getProperty("os.name").contains("Windows") ? new ProcessBuilder("cmd", "/c", "cls") : new ProcessBuilder("clear");
             clearCommand.inheritIO().start().waitFor();
         } catch (IOException | InterruptedException ignored) {
         }
