@@ -61,7 +61,12 @@ public class Main {
                 3. Open system
                 0. Quit""");
         Scanner sc = new Scanner(System.in);
-        int choice = sc.nextInt();
+        int choice;
+        try {
+            choice = Integer.parseInt(sc.nextLine());
+        } catch (Exception e) {
+            choice = -1;
+        }
         switch (choice) {
             case 1:
                 System.out.println("Road added");
@@ -79,7 +84,6 @@ public class Main {
                 System.out.println("Incorrect option. Please try again.");
         }
         sc.nextLine(); // Consume newline
-        sc.nextLine();
         clearConsole();
         return true;
     }
