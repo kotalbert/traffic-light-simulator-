@@ -13,6 +13,12 @@ public class Main {
         int interval = scanner.nextInt();
         scanner.nextLine(); // Consume the remaining newline
         
+        if (numberOfRoads <= 0 || interval <= 0) {
+            System.out.println("Error: Number of roads and interval must be positive values.");
+            scanner.close();
+            return;
+        }
+        
         System.out.println();
         System.out.println("Starting traffic light simulation with " + numberOfRoads + " roads and " + interval + " second intervals.");
         
