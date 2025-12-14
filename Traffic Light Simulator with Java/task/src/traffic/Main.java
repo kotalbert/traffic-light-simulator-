@@ -5,11 +5,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Welcome to the traffic management system!");
-        getNumberOfRoads(sc);
-        getInterval(sc);
-        clearConsole();
+        gatherProgramParameters();
 
         boolean running = true;
         while (running) {
@@ -17,40 +13,55 @@ public class Main {
         }
     }
 
-    /**
-     * Interval must be > 0
-     *
-     * @param sc
-     */
-    private static void getInterval(Scanner sc) {
-        System.out.print("Input the interval: ");
-        getUserInput(sc);
+    private static void gatherProgramParameters() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Welcome to the traffic management system!");
+        int roads = getNumberOfRoads(sc);
+        int interval = getInterval(sc);
+
+        clearConsole();
     }
 
-    private static void getUserInput(Scanner sc) {
+    /**
+     * Get user input either for interval or number of roads
+     * <p>
+     * Assume input must be integer > 0.
+     *
+     *
+     * @param sc
+     * @return
+     */
+    private static int getInterval(Scanner sc) {
+        System.out.print("Input the interval: ");
+        return getUserInput(sc);
+    }
+
+    private static int getUserInput(Scanner sc) {
+        int userInput;
         while (true) {
             try {
-                int interval = Integer.parseInt(sc.nextLine());
-                if (interval > 0) {
+                userInput = Integer.parseInt(sc.nextLine());
+                if (userInput > 0) {
                     break;
                 } else {
                     System.out.print("Incorrect input. Please try again:");
-                    sc.next();
                 }
             } catch (Exception e) {
                 System.out.print("Incorrect input. Please try again:");
             }
         }
+        return userInput;
     }
 
     /**
      * Number of roads must be > 0
      *
      * @param sc
+     * @return
      */
-    private static void getNumberOfRoads(Scanner sc) {
+    private static int getNumberOfRoads(Scanner sc) {
         System.out.print("Input the number of roads: ");
-        getUserInput(sc);
+        return getUserInput(sc);
     }
 
     private static boolean handleMenu() {
