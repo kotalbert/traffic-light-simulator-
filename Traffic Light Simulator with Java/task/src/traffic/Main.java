@@ -5,21 +5,27 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        gatherProgramParameters();
-
+        QueueThread qt = gatherProgramParameters();
+        qt.start();
         boolean running = true;
         while (running) {
-            running = handleMenu();
+            running = handleMenu(qt);
         }
     }
 
-    private static void gatherProgramParameters() {
+    /**
+     * Gather initial program parameters from user
+     *
+     * @return QueueThread with user parameters
+     */
+    private static QueueThread gatherProgramParameters() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Welcome to the traffic management system!");
         int roads = getNumberOfRoads(sc);
         int interval = getInterval(sc);
 
         clearConsole();
+        return new QueueThread(roads, interval);
     }
 
     /**
@@ -28,8 +34,6 @@ public class Main {
      * Assume input must be integer > 0.
      *
      *
-     * @param sc
-     * @return
      */
     private static int getInterval(Scanner sc) {
         System.out.print("Input the interval: ");
@@ -56,15 +60,14 @@ public class Main {
     /**
      * Number of roads must be > 0
      *
-     * @param sc
-     * @return
      */
     private static int getNumberOfRoads(Scanner sc) {
         System.out.print("Input the number of roads: ");
         return getUserInput(sc);
     }
 
-    private static boolean handleMenu() {
+    private static boolean handleMenu(QueueThread qt) {
+        qt.setSystemState(SystemState.MENU);
         System.out.println("""
                 Menu:
                 1. Add road
@@ -87,9 +90,16 @@ public class Main {
                 break;
             case 3:
                 System.out.println("System opened");
+                qt.setSystemState(SystemState.SYSTEM);
                 break;
             case 0:
                 System.out.println("Bye!");
+                qt.stopThread();
+                try {
+                    qt.join();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
                 return false;
             default:
                 System.out.println("Incorrect option. Please try again.");
@@ -99,7 +109,7 @@ public class Main {
         return true;
     }
 
-    private static void clearConsole() {
+    static void clearConsole() {
         try {
             var clearCommand = System.getProperty("os.name").contains("Windows") ? new ProcessBuilder("cmd", "/c", "cls") : new ProcessBuilder("clear");
             clearCommand.inheritIO().start().waitFor();
